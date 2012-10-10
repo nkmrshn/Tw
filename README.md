@@ -6,11 +6,11 @@ Tw
 設定
 ----
 
-アプリを["Twitter Applications"](http://dev.twitter.com/apps)で登録してください。アプリケーションの種類は、「クライアントアプリケーション」です。Access TokenとAccess Token Secretは、アプリを登録した後、右サイドメニューにある「My Access Token」をクリックすると取得できます。
+アプリを["Twitter Developers"](http://dev.twitter.com/)の["My applications"](https://dev.twitter.com/apps)で登録し、Consumer Key、Consumer Secret、Access Token、Access Token Secretを取得してください。
 
-URLは、Google URL Shortener APIを使って短縮します。GoogleはAccess Keyの取得を推奨し、設定するとAnonymous状態と比べて制限が拡大されます。Access Keyは、["Google APIs Console"](https://code.google.com/apis/console/)で取得できます。
+URLは、Google URL Shortener APIを使って短縮しています。GoogleはAccess Keyの取得を推奨し、設定するとAnonymous状態と比べて制限が拡大されます。Access Keyは、["Google APIs Console"](https://code.google.com/apis/console/)で取得できます。
 
-ホームディレクトリに.twrcファイルを作成し、設定値を保存します。引数なしで起動し、Consumer Key、Consumer Secret、Access Token、Access Token Secret、Google Api Access Keyを入力してください。Access Keyは省略する場合、単にエンターキーでスキップしてください。
+ホームディレクトリに.twrcファイルを作成し、設定値を保存します。引数なしで起動し、取得した値をぞれぞれ入力してください。Access Keyを省略する場合は、単にエンターキーを入力してください。
 
 例：
 
