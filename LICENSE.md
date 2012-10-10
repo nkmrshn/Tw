@@ -1,6 +1,7 @@
 The "Tw" ruby script may be used free of charge under the conditions
 of the following lincese.
---------------------------------------------------------------------
+
+---
 
 The MIT License (MIT)
 
