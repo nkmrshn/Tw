@@ -24,7 +24,6 @@ class Tw
   MAX_LENGTH            = 140
   TWITTER_API           = 'http://api.twitter.com'
   UPDATE_URL            = 'https://api.twitter.com/1.1/statuses/update.json'
-  UPDATE_WITH_MEDIA_URL = 'https://api.twitter.com/1.1/statuses/update_with_media.json'
 
   # Google URL Shortener API
   ACCESS_KEY     = 'google_api_access_key'
