@@ -1,4 +1,9 @@
 #!/usr/bin/env ruby
+#
+# Tw 
+# Copyright (c) 2012 nkmrshn
+# MIT License Applies
+#
 $KCODE = 'u'
 
 require 'fileutils'
@@ -100,4 +105,4 @@ ARGV.each do |argv|
   status += tw.shorten_if_url(argv)
 end
 
-puts Net::HTTPOK === tw.post(status) ? 'posted.' : 'faild.'
+puts Net::HTTPOK === tw.post(status) ? 'posted.' : 'faild.' unless status.empty?
