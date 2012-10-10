@@ -104,4 +104,4 @@ ARGV.each do |argv|
   status += tw.shorten_if_url(argv)
 end
 
-puts Net::HTTPOK === tw.post(status) ? 'posted.' : 'faild.' unless status.empty?
+puts Net::HTTPOK === tw.post(status) ? 'posted.' : 'failed.' unless status.empty?
