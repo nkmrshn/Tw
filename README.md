@@ -36,3 +36,8 @@ URLは、Google URL Shortener APIを使って短縮しています。GoogleはAc
 短縮化されて以下のようにURLは短縮化され投稿されます。
 
     こんにちは。 http://goo.gl/mMyfx
+
+備考
+----
+
+これは、2011年2月11日付け『[コマンドラインでツイートするRubyスクリプト（つづき）](http://d.hatena.ne.jp/nkmrshn/20110211/1297356809)』をベースに修正したものです。
