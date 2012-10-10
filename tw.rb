@@ -79,7 +79,7 @@ class Tw
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response = http.post(SHORTENER_PATH, params.to_json, {'Content-Type' => 'application/json'})
 
-    return Net::HTTPOK === response ? (JSON.parse(response.body))['id'] : ''
+    return Net::HTTPOK === response ? (JSON.parse(response.body))['id'] : long_url
   end
 
   def get_token
