@@ -44,4 +44,4 @@ URLは、Google URL Shortener APIを使って短縮しています。GoogleはAc
 
 * tw.rbに「chmod a+x tw.rb」などと、実行属性を付与するのをお忘れずに。
 
-* ライセンスについては、LICENSE.txtをご覧下さい。
+* ライセンスについては、LICENSE.mdをご覧下さい。
