@@ -4,8 +4,6 @@
 # Copyright (c) 2012 nkmrshn
 # MIT License Applies
 #
-$KCODE = 'u'
-
 require 'fileutils'
 require 'yaml'
 require 'rubygems'
@@ -13,8 +11,10 @@ require 'oauth'
 require 'json'
 
 class Tw
-  CONFIG_FILE   = '.twrc'
-  URL_REGEXP = /(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
+  CONFIG_FILE   = ".twrc"
+  URL = /(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
+  EXT = /\.(jpe?g|gif|png)$/i
+  CRLF = "\r\n"
 
   # Twitter API
   KEY                   = 'consumer_key'
@@ -24,6 +24,7 @@ class Tw
   MAX_LENGTH            = 140
   TWITTER_API           = 'http://api.twitter.com'
   UPDATE_URL            = 'https://api.twitter.com/1.1/statuses/update.json'
+  UPDATE_WITH_MEDIA_URL = 'https://api.twitter.com/1.1/statuses/update_with_media.json'
 
   # Google URL Shortener API
   ACCESS_KEY     = 'google_api_access_key'
@@ -50,16 +51,32 @@ class Tw
     end
   end
 
-  def post(status)
+  def post(status, filename = nil)
     unless status.empty? && status.split('').length > MAX_LENGTH
-      get_token.post(UPDATE_URL, {:status => status})
+      url = UPDATE_URL
+      headers = nil
+      body = {:status => status}
+
+      if !filename.nil? && File.exists?(filename) && valid_extension?(filename) 
+        filename = File.expand_path(filename)
+        url = UPDATE_WITH_MEDIA_URL
+        boundary = make_boundary
+        headers = {"Content-Type" => "multipart/form-data; boundary=" + boundary}
+        body = make_multipart_body(status, filename, boundary)
+      end
+
+      get_token.post(url, body, headers) unless body.nil?
     else
       nil
     end
   end
 
   def shorten_if_url(string)
-    URL_REGEXP =~ string ? shorten_url($1) : string
+    URL =~ string ? shorten_url($1) : string
+  end
+
+  def valid_extension?(filename)
+    EXT =~ filename
   end
 
   private
@@ -82,6 +99,26 @@ class Tw
     return Net::HTTPOK === response ? (JSON.parse(response.body))['id'] : long_url
   end
 
+  def make_multipart_body(status, filename, boundary)
+    begin
+      body = ""
+      body << "--" + boundary + CRLF
+      body << "Content-Disposition: form-data; name=\"status\"" + CRLF * 2
+      body << status + CRLF
+      body << "--" + boundary + CRLF
+      body << "Content-Type: application/octet-stream" + CRLF
+      body << "Content-Disposition: form-data; name=\"media[]\"; filename=\"" + File.basename(filename) + "\"" + CRLF * 2
+      File::open(filename){|f| body << f.read  + CRLF}
+      body << "--" + boundary + "--" + CRLF
+    rescue
+      nil
+    end
+  end
+
+  def make_boundary
+    (('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a).shuffle[0..69].join
+  end
+
   def get_token
     consumer = OAuth::Consumer.new(@config[KEY],
                                    @config[SECRET],
@@ -98,10 +135,16 @@ end
 
 tw = Tw.new
 status = ''
+filename = nil
 
-ARGV.each do |argv|
+ARGV.each_with_index do |argv, idx|
+  if tw.valid_extension?(argv) && idx == ARGV.length - 1
+    filename = argv
+    break
+  end
+
   status += ' ' unless status.empty?
   status += tw.shorten_if_url(argv)
 end
 
-puts Net::HTTPOK === tw.post(status) ? 'posted.' : 'failed.' unless status.empty?
+puts Net::HTTPOK === tw.post(status, filename) ? 'posted.' : 'failed.' unless status.empty?
