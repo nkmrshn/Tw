@@ -86,8 +86,8 @@ class Tw
   private
 
   def shorten_url(long_url)
-    params = {'longUrl' => long_url}
-    params.store('key', @google_access_key) if @google_access_key && !@google_access_key.empty?
+    return long_url if @google_access_key.nil? || @google_access_key.empty?
+    params = {'longUrl' => long_url, 'key' => @google_access_key}
     response = ''
 
     http = Net::HTTP.new(GOOGLE_API, 443)
@@ -95,7 +95,7 @@ class Tw
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response = http.post(SHORTENER_PATH, params.to_json, {'Content-Type' => 'application/json'})
 
-    return Net::HTTPOK === response ? (JSON.parse(response.body))['id'] : long_url
+    Net::HTTPOK === response ? (JSON.parse(response.body))['id'] : long_url
   end
 
   def make_multipart_body(status, filename, boundary)

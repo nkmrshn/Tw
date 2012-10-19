@@ -8,18 +8,18 @@ Tw
 
 アプリを["Twitter Developers"](http://dev.twitter.com/)の["My applications"](https://dev.twitter.com/apps)で登録し、Consumer Key、Consumer Secret、Access Token、Access Token Secretを取得してください。
 
-URLは、Google URL Shortener APIを使って短縮しています。GoogleはAccess Keyの取得を推奨し、設定するとAnonymous状態と比べて制限が拡大されます。Access Keyは、["Google APIs Console"](https://code.google.com/apis/console/)で取得できます。
+URLは、Google URL Shortener APIを使って短縮しています。GoogleのAccess Keyは、["Google APIs Console"](https://code.google.com/apis/console/)で取得できます。この設定を省略した場合、URLを短縮化しません。
 
-ホームディレクトリに.twrcファイルを作成し、設定値を保存します。引数なしで起動し、取得した値をぞれぞれ入力してください。Access Keyを省略する場合は、単にエンターキーを入力してください。
+ホームディレクトリに.twrcファイルを作成し、設定値を保存します。引数なしで起動し、取得した値をぞれぞれ入力してください。Google Access Keyを省略する場合は、単にエンターキーを入力してください。
 
 例：
 
     $ ./tw.rb
-    Consumer key:*************
+    Consumer key:***************
     Consumer secret:***************
-    Access token:***********
-    Access token secret:***********
-    Google api access key:***********
+    Access token:***************
+    Access token secret:***************
+    Google access key:***************
     saved to /Users/nkmrshn/.twrc
     $
 
