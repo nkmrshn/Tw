@@ -56,23 +56,21 @@ class Tw
   end
 
   def post(status, filename = nil)
-    unless status.empty? && status.split('').length > MAX_LENGTH
-      url = UPDATE_URL
-      headers = nil
-      body = {:status => status}
+    return nil if status.nil? || status.empty? || status.split('').length > MAX_LENGTH
 
-      if !filename.nil? && File.exists?(filename) && valid_extension?(filename) 
-        filename = File.expand_path(filename)
-        url = UPDATE_WITH_MEDIA_URL
-        boundary = make_boundary
-        headers = {"Content-Type" => "multipart/form-data; boundary=" + boundary}
-        body = make_multipart_body(status, filename, boundary)
-      end
+    url = UPDATE_URL
+    headers = nil
+    body = {:status => status}
 
-      get_token.post(url, body, headers) unless body.nil?
-    else
-      nil
+    if !filename.nil? && File.exists?(filename) && valid_extension?(filename) 
+      filename = File.expand_path(filename)
+      url = UPDATE_WITH_MEDIA_URL
+      boundary = make_boundary
+      headers = {"Content-Type" => "multipart/form-data; boundary=" + boundary}
+      body = make_multipart_body(status, filename, boundary)
     end
+
+    get_token.post(url, body, headers) unless body.nil?
   end
 
   def shorten_if_url(string)
@@ -87,6 +85,7 @@ class Tw
 
   def shorten_url(long_url)
     return long_url if @google_access_key.nil? || @google_access_key.empty?
+
     params = {'longUrl' => long_url, 'key' => @google_access_key}
     response = ''
 
