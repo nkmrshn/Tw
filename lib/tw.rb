@@ -114,7 +114,7 @@ class Tw
   end
 
   def make_boundary
-    (('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a).shuffle[0..69].join
+    (('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a + ["'", "(", ")", "+", "_", ",", "-", ".", "/", ":", "=", "?"]).shuffle[0..69].join
   end
 
   def get_token
