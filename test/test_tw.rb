@@ -100,7 +100,7 @@ class TC_Tw < Test::Unit::TestCase
   def test_make_boundary
     actual = @tw.__send__(:make_boundary)
     assert_not_nil(actual)
-    assert_match(/[a-zA-Z0-9'()+_,-\.\/:=\?]{70}/i, actual)
+    assert_match(/[a-zA-Z0-9]{62}/i, actual)
   end
 
   def test_make_multipart_body
