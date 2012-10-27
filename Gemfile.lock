@@ -3,8 +3,8 @@ GEM
   specs:
     addressable (2.3.2)
     crack (0.3.1)
-    json (1.5.4)
-    oauth (0.4.5)
+    json (1.7.5)
+    oauth (0.4.7)
     webmock (1.8.11)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)

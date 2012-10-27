@@ -2,4 +2,7 @@ source "http://rubygems.org"
 
 gem 'oauth'
 gem 'json'
-gem 'webmock'
+
+group :test do
+  gem 'webmock'
+end
