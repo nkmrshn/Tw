@@ -2,6 +2,7 @@ require 'test/unit'
 require 'tempfile'
 require 'rubygems'
 require 'webmock'
+require 'oauth'
 require 'json'
 require 'tw'
 
@@ -118,5 +119,10 @@ class TC_Tw < Test::Unit::TestCase
     body << "--" + boundary + "--" + Tw::CRLF
 
     assert_equal(body, @tw.__send__(:make_multipart_body, status, filename, boundary))
+  end
+
+  def test_get_token
+    token = @tw.__send__(:get_token)
+    assert_instance_of(OAuth::AccessToken, token)
   end
 end
